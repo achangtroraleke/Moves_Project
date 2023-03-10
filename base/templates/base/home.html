@@ -1,0 +1,71 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+
+
+<div class="result-container">
+
+    <div class='title-box'><h1>The Move:</h1></div>
+
+    <div class="title-box"><h1>For the weekend of {{current_week| date:"F d "}}</h1></div>
+    {% if user.is_superuser %}
+    <div class=""><a href="{% url 'create-poll' %}" class="choice-button">Admin:Create Poll</a></div>
+    {% endif %}
+
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li class="message">{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    {% if poll == None %}
+        
+        <h2>The Poll for the this week hasn't been created yet.</h2>
+            
+    {% else %}   
+    <div class="header-header">
+        <h4>Created on {{poll.created | date:"F d "}}</h4>
+        <h2>Total Votes: {{total_votes}}</h2>
+        <small>Last time voted: {{poll.updated| timesince}}</small>  
+    </div>
+    {% if venues %}        
+    <div class="result-window ">
+        
+            {% for venue in venues %}
+                <div class="choice-container">
+                    <div class="choice-button-container"><a class="choice-button" href="{% url 'add-vote' venue.id %}">Vote</a></div>
+                    <div class="choice-info" style="--w:{% widthratio venue.votes total_votes 100 %}">
+                        <div class="choice-name"><a href="{{venue.website}}">{{venue.venue| title}}: </a></div>
+                        <div class="choice-percent">{% widthratio venue.votes total_votes 100 %}% </div>
+                    </div>
+                </div>
+            {% endfor %}
+        
+    </div>
+    {% endif %}
+   
+    <div class="title-container">
+
+
+
+        <div class="header-containers">
+ 
+            <a href="{% url 'create-move' poll.id %}" class="choice-button">Know a better move?</a>
+        </div>
+
+    </div> 
+
+
+
+        
+
+   
+    
+       
+    {% endif %}
+</div>
+
+
+{% endblock content %}

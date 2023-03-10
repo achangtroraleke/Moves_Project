@@ -1,0 +1,34 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<div class="form-container">
+    <div class="form-box">
+        <div class="form-format">
+            <div class="form-title">Suggest a Move.</div>
+            <form method="POST" action="" class="">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label>What's the venue called?</label>
+                    {{form.name}}
+                </div>
+                <div class="form-group">
+                    <label>Address:</label>
+                    {{form.address}}
+                </div>
+                <div class="form-group">
+                <label>Website:</label>
+                {{form.website}}    
+                </div>
+
+                
+                <input type="submit" value="submit" class="choice-button max-width" />
+            </form>
+        </div>
+       
+           
+    </div>
+    
+</div>
+
+
+{% endblock %}
