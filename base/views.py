@@ -47,11 +47,12 @@ def createMove(request,pk):
                     if suggested_option in selected_poll.venues.all():
                         messages.error(request, "This move was already suggested. Please vote on the existing choice.")
                     else:
-                        Option.objects.create(
+                        new_option = Option.objects.create(
                             venue = suggested_option,
                             poll=selected_poll,
-                            user_votes=request.user,
+                            
                         )
+                        new_option.user_votes.add(request.user)
                         selected_poll.participants.add(request.user)
                         selected_poll.venues.add(suggested_option)
                     return redirect('home')
@@ -63,12 +64,13 @@ def createMove(request,pk):
                             # address = form.cleaned_data['address'],
                             name = form.cleaned_data['name'].lower()
                             )
-                    Option.objects.create(
+                    new_option = Option.objects.create(
                         venue=new_venue,
-                        poll=selected_poll,
-                        user_votes=request.user,
+                        poll=selected_poll
                         
                     )
+                    new_option.user_votes.add(request.user)
+
                     selected_poll.venues.add(new_venue)
                     selected_poll.participants.add(request.user)
                     return redirect('home')
