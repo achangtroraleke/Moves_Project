@@ -60,7 +60,7 @@ def createMove(request,pk):
                     new_venue=Venue.objects.create(
                             host = request.user,
                             website = form.cleaned_data['website'],
-                            address = form.cleaned_data['address'],
+                            # address = form.cleaned_data['address'],
                             name = form.cleaned_data['name'].lower()
                             )
                     Option.objects.create(

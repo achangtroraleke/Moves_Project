@@ -6,7 +6,7 @@ class VenueForm(ModelForm):
     class Meta:
         model = Venue
         fields = '__all__'
-        exclude = ['poll', 'votes', 'host']
+        exclude = ['poll', 'votes', 'host', 'address']
 
 class MyUserCreationForm(UserCreationForm):
     class Meta:
