@@ -70,6 +70,7 @@ def createMove(request,pk):
                         
                     )
                     selected_poll.venues.add(new_venue)
+                    selected_poll.participants.add(request.user)
                     return redirect('home')
                 
             else:
@@ -84,11 +85,13 @@ def addVote(request,pk):
     option = Option.objects.get(id=pk)
     print(option.poll.participants.all())
     if request.user in option.poll.participants.all():
+        
         messages.error(request, "You have already voted.")
         return redirect('home')
     else:
         option.poll.participants.add(request.user) 
         option.votes += 1
+        option.user_votes.add(request.user)
         option.save()
         return redirect('home')
 

@@ -28,16 +28,22 @@
     <div class="header-header">
         <h4>Created on {{poll.created | date:"F d "}}</h4>
         <h2>Total Votes: {{total_votes}}</h2>
-        <small>Last time voted: {{poll.updated| timesince}}</small>  
+        <small>Location: {{poll.area}}</small>  
     </div>
     {% if venues %}        
     <div class="result-window ">
         
             {% for venue in venues %}
-                <div class="choice-container">
+            <div class="choice-container">
+                {% if request.user in poll.participants %}
+                    <div class="choice-button-container"><a class="choice-button" href="{% url 'add-vote' venue.id %}">Remove</a></div>
+
+                {% else %}
+                
                     <div class="choice-button-container"><a class="choice-button" href="{% url 'add-vote' venue.id %}">Vote</a></div>
+                {% endif %}
                     <div class="choice-info" style="--w:{% widthratio venue.votes total_votes 100 %}">
-                        <div class="choice-name"><a href="{{venue.website}}">{{venue.venue| title}}: </a></div>
+                        <div class="choice-name"><a href="{{venue.venue.website}}">{{venue.venue| title}}: </a></div>
                         <div class="choice-percent">{% widthratio venue.votes total_votes 100 %}% </div>
                     </div>
                 </div>
