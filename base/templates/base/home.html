@@ -35,7 +35,7 @@
         
             {% for venue in venues %}
             <div class="choice-container">
-                {% if request.user in poll.participants %}
+                {% if request.user in venue.user_votes %}
                     <div class="choice-button-container"><a class="choice-button" href="{% url 'add-vote' venue.id %}">Remove</a></div>
 
                 {% else %}
@@ -44,7 +44,7 @@
                 {% endif %}
                     <div class="choice-info" style="--w:{% widthratio venue.votes total_votes 100 %}">
                         <div class="choice-name"><a href="{{venue.venue.website}}">{{venue.venue| title}}: </a></div>
-                        <div class="choice-percent">{% widthratio venue.votes total_votes 100 %}% </div>
+                        <div class="choice-percent">{% widthratio venue.user_votes|length total_votes 100 %}% </div>
                     </div>
                 </div>
             {% endfor %}
