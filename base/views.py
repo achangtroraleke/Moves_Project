@@ -17,7 +17,7 @@ def home(request):
         venues = poll.option_set.all().order_by('-votes')  
         total_votes = 0
         for x in venues:
-            total_votes +=x.votes
+            total_votes +=len(x.user_votes)
         
         context = {'poll':poll, 'venues': venues, 'current_week': current_week.date, 'total_votes': total_votes}
      
@@ -55,6 +55,7 @@ def createMove(request,pk):
                         new_option.user_votes.add(request.user)
                         selected_poll.participants.add(request.user)
                         selected_poll.venues.add(suggested_option)
+
                     return redirect('home')
                         
                 except Venue.DoesNotExist:
