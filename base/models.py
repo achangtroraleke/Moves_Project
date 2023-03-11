@@ -26,6 +26,7 @@ class Venue(models.Model):
     def __str__(self):
         return self.name
 
+
 class Poll(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
@@ -41,7 +42,8 @@ class Poll(models.Model):
 class Option(models.Model):
     venue = models.ForeignKey(Venue, on_delete=models.SET_NULL, null=True)
     poll = models.ForeignKey(Poll, on_delete=models.CASCADE, null=True)
-    user_votes = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    user_votes = models.ManyToManyField(
+        User, related_name="user_votes", blank=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     votes = models.IntegerField(default=1)
