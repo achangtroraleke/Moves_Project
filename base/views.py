@@ -130,7 +130,7 @@ def loginUser(request):
         password = request.POST.get('password')
 
         try:
-            user = User.objects.get(username=username)
+            user = User.objects.get(email=username)
         except:
             messages.error(request, "User does not exist.")
 
