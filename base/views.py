@@ -89,15 +89,15 @@ def searchMove(request, pk):
     venues = Venue.objects.all()
     selected_poll = Poll.objects.get(id=pk)
     if request.method =="POST":
-        selected_venue = request.POST.get('name')
+        selected_venue = request.POST.get('name').lower()
         try:
-            Venue.objects.get(name = selected_venue.lower())
+            Venue.objects.get(name = selected_venue.lower)
             Option.objects.create(
                 venue=selected_venue,
                 poll=selected_poll
             )
         except Venue.DoesNotExist:
-            return redirect('create-move')
+            return redirect('create-move', )
     
 
     context = {'poll':selected_poll, "venues":venues}
