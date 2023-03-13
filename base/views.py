@@ -12,12 +12,13 @@ from django.contrib.auth.decorators import login_required
 def home(request):
     today = datetime.datetime.now()
     current_week = today - datetime.timedelta(days=today.weekday())
+
     try:
         poll = Poll.objects.get(active=True)
         venues = poll.option_set.all().order_by('-votes')  
         total_votes = 0
         for x in venues:
-            total_votes += len(x.user_votes)
+            total_votes += len(x.user_votes.all())
         
         context = {'poll':poll, 'venues': venues, 'current_week': current_week.date, 'total_votes': total_votes}
      
@@ -88,8 +89,16 @@ def addVote(request,pk):
     option = Option.objects.get(id=pk)
     print(option.poll.participants.all())
     if request.user in option.poll.participants.all():
-        
-        messages.error(request, "You have already voted.")
+        for all_options in option.poll.option_set.all():
+            if request.user in all_options.user_votes.all():
+                all_options.user_votes.remove(request.user)
+                all_options.votes -= 1
+                all_options.save()
+        option.user_votes.add(request.user)
+        option.votes +=1
+        option.save()
+       
+      
         return redirect('home')
     else:
         option.poll.participants.add(request.user) 

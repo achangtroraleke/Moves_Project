@@ -423,3 +423,7 @@ input[type=checkbox]:checked ~ #menu{
 .message{
     color:red;
 }
+
+.confirmed-green{
+    background:linear-gradient(to bottom, #00FA9A 5%, #f6f6f6 100%);
+}

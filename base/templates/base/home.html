@@ -22,7 +22,7 @@
 
     {% if poll == None %}
         
-        <h2>The Poll for the this week hasn't been created yet.</h2>
+        <h2>The Poll for this week hasn't been created yet.</h2>
             
     {% else %}   
     <div class="header-header">
@@ -35,7 +35,7 @@
         
             {% for venue in venues %}
             <div class="choice-container">
-                {% if request.user in venue.user_votes %}
+                {% if request.user in venue.user_votes.all %}
                     <div class="choice-button-container"><a class="choice-button" href="{% url 'add-vote' venue.id %}">Remove</a></div>
 
                 {% else %}
