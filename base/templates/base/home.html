@@ -42,9 +42,9 @@
                 
                     <div class="choice-button-container"><a class="choice-button" href="{% url 'add-vote' venue.id %}">Vote</a></div>
                 {% endif %}
-                    <div class="choice-info" style="--w:{% widthratio venue.user_votes|length total_votes 100 %}">
+                    <div class="choice-info" style="--w:{% widthratio venue.user_votes.all|length total_votes 100 %}">
                         <div class="choice-name"><a href="{{venue.venue.website}}">{{venue.venue| title}}: </a></div>
-                        <div class="choice-percent">{% widthratio venue.user_votes|length total_votes 100 %}% </div>
+                        <div class="choice-percent">{% widthratio venue.user_votes.all|length total_votes 100 %}% </div>
                     </div>
                 </div>
             {% endfor %}
