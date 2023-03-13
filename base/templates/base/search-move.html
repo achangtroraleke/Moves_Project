@@ -9,19 +9,17 @@
                 {% csrf_token %}
                 <div class="form-group">
                     <label>What's the venue called?</label>
-                    {{form.name}}
+                    <input type="text" list = 'venues' placeholder="Venues" name="venue">
+                    <datalist id="venues">
+                         {% for venue in venues %}
+                            <option value="{{venue}}">{{venue.name}}</option>
+                         {% endfor %}
+                    </datalist>
                 </div>
-                <div class="form-group">
-                    <label>Address:</label>
-                    {{form.address}}
-                </div>
-                <div class="form-group">
-                <label>Website:</label>
-                {{form.website}}    
-                </div>
+         
 
                 
-                <input type="submit" value="submit" class="choice-button max-width" />
+                <input type="submit" value="Search" class="choice-button max-width" />
             </form>
         </div>
        

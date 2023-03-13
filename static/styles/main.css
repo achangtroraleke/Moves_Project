@@ -427,3 +427,8 @@ input[type=checkbox]:checked ~ #menu{
 .confirmed-green{
     background:linear-gradient(to bottom, #00FA9A 5%, #f6f6f6 100%);
 }
+
+.confirmed-green:hover {
+	background:linear-gradient(to bottom, #f6f6f6 5%, #ffffff 100%);
+	background-color:#f6f6f6;
+}

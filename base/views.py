@@ -35,6 +35,7 @@ def home(request):
 def createMove(request,pk):
     form = VenueForm()
     selected_poll = Poll.objects.get(id=pk)
+    venues = Venue.objects.all()
     if request.user in selected_poll.participants.all():
         messages.error(request, "You have already participated in this poll.")
         return redirect('home')
@@ -80,7 +81,7 @@ def createMove(request,pk):
             else:
                 messages.error(request, "Please make sure you fill out all the fields properly.")
 
-    context ={'form':form, 'poll':selected_poll}
+    context ={'form':form, 'poll':selected_poll, "venues":venues}
     return render(request, 'base/create-move.html', context)
 
 @login_required(login_url='login')
@@ -165,3 +166,20 @@ def registerUser(request):
         else:
             messages.error(request, "An error occurred during registering.")
     return render(request, 'base/login.html', {"form":form})
+
+def searchMove(request, pk):
+    selected_poll = Poll.objects.get(id=pk)
+    if request.method =="POST":
+        selected_venue = request.POST.get('name')
+        try:
+            Venue.objects.get(name = selected_poll.lower())
+            Option.objects.create(
+                venue=selected_venue,
+                poll=selected_poll
+            )
+        except Venue.DoesNotExist:
+            return redirect('create-move')
+    
+
+    context = {'poll':selected_poll}
+    return render(request, 'base/search-move.html', context)
