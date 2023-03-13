@@ -85,6 +85,24 @@ def createMove(request,pk):
     return render(request, 'base/create-move.html', context)
 
 @login_required(login_url='login')
+def searchMove(request, pk):
+    selected_poll = Poll.objects.get(id=pk)
+    if request.method =="POST":
+        selected_venue = request.POST.get('name')
+        try:
+            Venue.objects.get(name = selected_poll.lower())
+            Option.objects.create(
+                venue=selected_venue,
+                poll=selected_poll
+            )
+        except Venue.DoesNotExist:
+            return redirect('create-move')
+    
+
+    context = {'poll':selected_poll}
+    return render(request, 'base/search-move.html', context)
+
+@login_required(login_url='login')
 def addVote(request,pk):
     
     option = Option.objects.get(id=pk)
@@ -166,20 +184,3 @@ def registerUser(request):
         else:
             messages.error(request, "An error occurred during registering.")
     return render(request, 'base/login.html', {"form":form})
-
-def searchMove(request, pk):
-    selected_poll = Poll.objects.get(id=pk)
-    if request.method =="POST":
-        selected_venue = request.POST.get('name')
-        try:
-            Venue.objects.get(name = selected_poll.lower())
-            Option.objects.create(
-                venue=selected_venue,
-                poll=selected_poll
-            )
-        except Venue.DoesNotExist:
-            return redirect('create-move')
-    
-
-    context = {'poll':selected_poll}
-    return render(request, 'base/search-move.html', context)
