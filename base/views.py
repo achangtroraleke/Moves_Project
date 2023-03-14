@@ -91,9 +91,9 @@ def searchMove(request, pk):
     if request.method =="POST":
         selected_venue = request.POST.get('venue').lower()
         try:
-            Venue.objects.get(name = selected_venue)
+            found_venue = Venue.objects.get(name = selected_venue)
             Option.objects.create(
-                venue=selected_venue,
+                venue=found_venue,
                 poll=selected_poll
             )
         except Venue.DoesNotExist:
