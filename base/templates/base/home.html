@@ -28,7 +28,7 @@
     <div class="header-header">
         <h4>Created on {{poll.created | date:"F d "}}</h4>
         <h2>Total Votes: {{total_votes}}</h2>
-        <small>Location: {{poll.area}}</small>  
+        <small>Location: {{poll.area|title}}</small>  
     </div>
     {% if venues %}        
     <div class="result-window ">
