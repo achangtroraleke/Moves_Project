@@ -88,11 +88,12 @@ def createMove(request,pk):
 def searchMove(request, pk):
     venues = Venue.objects.all()
     selected_poll = Poll.objects.get(id=pk)
-    if request.method =="POST":
-        if request.user in selected_poll.participants.all():
-            messages.error(request, "You have already made a suggestion in this poll.")
-            return redirect('home')
-        else:
+    if request.user in selected_poll.participants.all():
+        messages.error(request, "You have already made a suggestion in this poll")
+        return redirect('home')
+    else:
+        if request.method =="POST":
+
             selected_venue = request.POST.get('venue').lower()
 
             try:
