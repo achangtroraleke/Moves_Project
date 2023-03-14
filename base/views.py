@@ -97,7 +97,7 @@ def searchMove(request, pk):
                 poll=selected_poll
             )
         except Venue.DoesNotExist:
-            return redirect('create-move', )
+            return redirect('create-move', {'poll':selected_poll})
     
 
     context = {'poll':selected_poll, "venues":venues}
