@@ -89,24 +89,28 @@ def searchMove(request, pk):
     venues = Venue.objects.all()
     selected_poll = Poll.objects.get(id=pk)
     if request.method =="POST":
-        selected_venue = request.POST.get('venue').lower()
+        if request.user in selected_poll.participants.all():
+            messages.error(request, "You have already made a suggestion in this poll.")
+            return redirect('home')
+        else:
+            selected_venue = request.POST.get('venue').lower()
 
-        try:
-            found_venue = Venue.objects.get(name = selected_venue)
-            if found_venue in selected_poll.venues.all():
-                messages.error(request, "This Venue was already suggested for this poll.")
-                return redirect('home')
-            else:
-                Option.objects.create(
-                    venue=found_venue,
-                    poll=selected_poll
-                )
-                selected_poll.participants.add(request.user)
-                selected_poll.venues.add(found_venue)
-                selected_poll.save()
-                return redirect('home')
-        except Venue.DoesNotExist:
-            return redirect('create-move', pk=pk)
+            try:
+                found_venue = Venue.objects.get(name = selected_venue)
+                if found_venue in selected_poll.venues.all():
+                    messages.error(request, "This Venue was already suggested for this poll.")
+                    return redirect('home')
+                else:
+                    Option.objects.create(
+                        venue=found_venue,
+                        poll=selected_poll
+                    )
+                    selected_poll.participants.add(request.user)
+                    selected_poll.venues.add(found_venue)
+                    selected_poll.save()
+                    return redirect('home')
+            except Venue.DoesNotExist:
+                return redirect('create-move', pk=pk)
     
 
     context = {'poll':selected_poll, "venues":venues}
