@@ -90,20 +90,17 @@ def searchMove(request, pk):
     selected_poll = Poll.objects.get(id=pk)
     if request.method =="POST":
         selected_venue = request.POST.get('venue').lower()
-        if selected_venue in selected_poll.venues.all():
-            messages.error(request, "This move was already suggested. Please vote on the existing choice.")
-            return redirect('home')
-        
-        else:
-            try:
-                found_venue = Venue.objects.get(name = selected_venue)
+
+        try:
+            found_venue = Venue.objects.get(name = selected_venue)
+            if found_venue in Venue.objects.all():           
                 Option.objects.create(
                     venue=found_venue,
                     poll=selected_poll
                 )
                 return redirect('home')
-            except Venue.DoesNotExist:
-                return redirect('create-move', pk=pk)
+        except Venue.DoesNotExist:
+            return redirect('create-move', pk=pk)
     
 
     context = {'poll':selected_poll, "venues":venues}
