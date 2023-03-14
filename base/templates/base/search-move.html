@@ -9,7 +9,7 @@
                 {% csrf_token %}
                 <div class="form-group">
                     <label>What's the venue called?</label>
-                    <input type="text" list = 'venues' placeholder="Venues" name="venue">
+                    <input type="text" list = 'venues' placeholder="Venue" name="venue">
                     <datalist id="venues">
                          {% for venue in venues %}
                             <option value="{{venue.name|title}}">{{venue.name|title}}</option>
