@@ -101,6 +101,7 @@ def searchMove(request, pk):
                     venue=found_venue,
                     poll=selected_poll
                 )
+                selected_poll.venues.add(found_venue)
                 return redirect('home')
         except Venue.DoesNotExist:
             return redirect('create-move', pk=pk)
