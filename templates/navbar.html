@@ -33,7 +33,11 @@
                 <div class="nav-menu">
 
                     <img src="{% static 'images/signpost.png' %}" alt="" class="dropdown-logo">
+                    {% if request.user.is_authenticated %}
+                    <p class="logo logo-text">Hi, {{request.user.name|title}}</p>
+                    {% else %}
                     <p class="logo logo-text">Join the Move</p>
+                    {% endif %}
                 </div>
              
                 <div class="dropdown-content">
