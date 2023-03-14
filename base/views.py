@@ -189,5 +189,5 @@ def registerUser(request):
             login(request, user)
             return redirect('home')
         else:
-            messages.error(request, "An error occurred during registering.")
+            messages.error(request, 'An error occurred during registering.\nPlease make sure your password contains:\nUppercase,\nLowercase,\nSpecial characters,\nA number.')
     return render(request, 'base/login.html', {"form":form})
