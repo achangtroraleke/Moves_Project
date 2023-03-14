@@ -12,7 +12,7 @@
                     <input type="text" list = 'venues' placeholder="Venues" name="venue">
                     <datalist id="venues">
                          {% for venue in venues %}
-                            <option value="{{venue.name}}">{{venue.name|title}}</option>
+                            <option value="{{venue.name|title}}">{{venue.name|title}}</option>
                          {% endfor %}
                     </datalist>
                     <input type="hidden" value="{{post.id}}" name="pk">
