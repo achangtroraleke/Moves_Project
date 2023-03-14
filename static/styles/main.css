@@ -26,6 +26,7 @@ a:visited{
     background-size: cover;
     background-repeat: no-repeat;
     height: 100dvh;
+    width: 100dvw;
 }
 
 li{
@@ -369,8 +370,41 @@ border: solid black;
         display: none;
     }
 
-    
+}
 
+@media (max-height:1000px) and (orientation:landscape){
+    .nav-burger{
+       display: block;
+
+   }
+   .logo-text{
+       display: none;
+   }
+
+   .title-container{
+       display: block;
+   }
+   .result-container{
+
+       background:none;
+       border: none;
+       width: 100%;
+       color: white;
+       position: revert;
+       left: 0%;
+
+   }
+
+   .form-container{
+       background: none;
+       border: none;
+       color:white;
+       width: 100%;
+   }
+
+   .dropdown{
+       display: none;
+   }
 }
 
 #menu{
