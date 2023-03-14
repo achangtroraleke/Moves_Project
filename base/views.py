@@ -123,7 +123,10 @@ def addVote(request,pk):
     
     option = Option.objects.get(id=pk)
     print(option.poll.participants.all())
-    if request.user in option.poll.participants.all():
+    if request.user in option.user_votes.all():
+        return redirect('home')
+
+    elif request.user in option.poll.participants.all():
         for all_options in option.poll.option_set.all():
             if request.user in all_options.user_votes.all():
                 all_options.user_votes.remove(request.user)
