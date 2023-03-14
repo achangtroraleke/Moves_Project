@@ -93,7 +93,9 @@ def searchMove(request, pk):
 
         try:
             found_venue = Venue.objects.get(name = selected_venue)
-            if found_venue in Venue.objects.all():           
+            if found_venue in selected_poll.option_set.all():
+                messages.error(request, "This Venue was already suggested for this poll.")
+            else:
                 Option.objects.create(
                     venue=found_venue,
                     poll=selected_poll
