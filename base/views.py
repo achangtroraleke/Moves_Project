@@ -102,10 +102,11 @@ def searchMove(request, pk):
                     messages.error(request, "This Venue was already suggested for this poll.")
                     return redirect('home')
                 else:
-                    Option.objects.create(
+                    new_option = Option.objects.create(
                         venue=found_venue,
                         poll=selected_poll
                     )
+                    new_option.user_votes.add(request.user)
                     selected_poll.participants.add(request.user)
                     selected_poll.venues.add(found_venue)
                     selected_poll.save()
