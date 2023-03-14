@@ -34,7 +34,7 @@ def home(request):
 @login_required(login_url='login')
 def createMove(request,pk):
     form = VenueForm()
-    selected_poll = Poll.objects.get(request.GET('pk'))
+    selected_poll = Poll.objects.get(id=pk)
     
     if request.user in selected_poll.participants.all():
         messages.error(request, "You have already participated in this poll.")
@@ -97,7 +97,7 @@ def searchMove(request, pk):
                 poll=selected_poll
             )
         except Venue.DoesNotExist:
-            return redirect('create-move', {'poll':selected_poll})
+            return redirect('create-move', pk=pk)
     
 
     context = {'poll':selected_poll, "venues":venues}
